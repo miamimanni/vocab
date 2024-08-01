@@ -1,19 +1,23 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 0;
+    background-color: #f8f9fa; /* Light background color */
+    color: #333; /* Dark text color for better readability */
 }
 
 h1, h2 {
-    text-align: left;
+    text-align: center;
+}
+#dashboard, #spell-check, #summary {
+    display: none;
 }
 
 #word-input {
     text-align: left;
 }
 
-#dashboard, #spell-check, #summary {
-    display: none;
+#word-list {
+    max-height: 300px; /* Limit height of the word list */
+    overflow-y: auto; /* Enable scrolling for overflow */
 }
 
 #feedback {
@@ -21,14 +25,17 @@ h1, h2 {
 }
 
 .correct {
-    color: green;
+    color: green; /* Green for correct letters */
 }
 
 .incorrect {
-    color: red;
+    color: red; /* Red for incorrect letters */
 }
 
-
 #summary {
-    text-align: center; /* Left justify the summary page */
+    text-align: left; /* Left justify the summary page */
+}
+
+#stats {
+    margin-top: 10px; /* Add space above stats */
 }
