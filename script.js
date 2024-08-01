@@ -157,13 +157,11 @@ function submitWord() {
 function disableButtons() {
     const buttons = document.querySelectorAll('#spell-check button');
     buttons.forEach(button => button.disabled = true);
-    document.getElementById('user-input').disabled = true;
 }
 
 function enableButtons() {
     const buttons = document.querySelectorAll('#spell-check button');
     buttons.forEach(button => button.disabled = false);
-    document.getElementById('user-input').disabled = false;
     document.getElementById('submit-button').disabled = true; // Initially disable submit button
 }
 
