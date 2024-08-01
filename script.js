@@ -56,6 +56,7 @@ function startPractice() {
 function showSpellCheck() {
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('spell-check').style.display = 'block';
+    enableButtons()
     loadNextWord();
 }
 
@@ -117,9 +118,15 @@ function checkSpelling() {
         <p>Letters typed: ${userInput.length}</p>
         <p>Letters remaining: ${lettersRemaining}</p>
     `;
+
+    // Enable submit button only if at least one letter is typed
+    const submitButton = document.getElementById('submit-button');
+    submitButton.disabled = userInput.length === 0;
 }
 
 function submitWord() {
+    disableButtons();
+
     const userInput = document.getElementById('user-input').value.toLowerCase();
     const correctWord = currentWord.toLowerCase();
     userAttempt = userInput;
@@ -141,7 +148,23 @@ function submitWord() {
     });
 
     currentWordIndex++;
-    setTimeout(loadNextWord, 2000);
+    setTimeout(() => {
+        loadNextWord();
+        setTimeout(enableButtons, 3000); // Enable buttons after new word is loaded with 3-second delay
+    }, 1000); // 1-second delay before loading the next word
+}
+
+function disableButtons() {
+    const buttons = document.querySelectorAll('#spell-check button');
+    buttons.forEach(button => button.disabled = true);
+    document.getElementById('user-input').disabled = true;
+}
+
+function enableButtons() {
+    const buttons = document.querySelectorAll('#spell-check button');
+    buttons.forEach(button => button.disabled = false);
+    document.getElementById('user-input').disabled = false;
+    document.getElementById('submit-button').disabled = true; // Initially disable submit button
 }
 
 function showSummary() {
