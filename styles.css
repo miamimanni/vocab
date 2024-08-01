@@ -1,44 +1,23 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    margin: 0;
+    margin: 20px;
+    padding: 0;
 }
 
-#app {
-    text-align: center;
-    width: 50%;
+h1, h2 {
+    text-align: left;
 }
 
-h1 {
-    font-size: 2em;
+#word-input {
+    text-align: left;
 }
 
-textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    margin: 10px;
-    cursor: pointer;
-}
-
-#user-input {
-    font-size: 1.5em;
-    padding: 10px;
-    width: 50%;
+#dashboard, #spell-check, #summary {
+    display: none;
 }
 
 #feedback {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .correct {
@@ -49,7 +28,7 @@ button {
     color: red;
 }
 
-#word-list {
-    text-align: left;
-    margin-bottom: 20px;
+
+#summary {
+    text-align: center; /* Left justify the summary page */
 }

@@ -4,6 +4,7 @@ let currentWordIndex = 0;
 let currentWord = "";
 let userAttempt = "";
 let results = [];
+let hardMode = false;
 
 function showDashboard() {
     const wordsInput = document.getElementById('words').value.trim();
@@ -11,12 +12,27 @@ function showDashboard() {
     words = wordsInput.split('\n').map(word => word.trim());
     const wordList = document.getElementById('word-list');
     wordList.innerHTML = '';
+
+    // Load selections from localStorage
+    selectedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+    hardMode = JSON.parse(localStorage.getItem('hardMode')) || false;
+
+    // Check if there are no saved selections and default to checking all words
+    if (selectedWords.length === 0) {
+        selectedWords = [...words];
+        localStorage.setItem('selectedWords', JSON.stringify(selectedWords));
+    }
+
     words.forEach((word, index) => {
         const label = document.createElement('label');
-        label.innerHTML = `<input type="checkbox" id="word-${index}" checked> ${word}`;
+        const checked = selectedWords.includes(word);
+        label.innerHTML = `<input type="checkbox" id="word-${index}" ${checked ? 'checked' : ''}> ${word}`;
         wordList.appendChild(label);
         wordList.appendChild(document.createElement('br'));
     });
+    
+    document.getElementById('hard-mode').checked = hardMode;
+
     document.getElementById('word-input').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('spell-check').style.display = 'none';
@@ -25,6 +41,12 @@ function showDashboard() {
 
 function startPractice() {
     selectedWords = words.filter((word, index) => document.getElementById(`word-${index}`).checked);
+    hardMode = document.getElementById('hard-mode').checked;
+
+    // Save selections to localStorage
+    localStorage.setItem('selectedWords', JSON.stringify(selectedWords));
+    localStorage.setItem('hardMode', JSON.stringify(hardMode));
+
     if (selectedWords.length === 0) return;
     currentWordIndex = 0;
     results = [];
@@ -44,9 +66,13 @@ function loadNextWord() {
     }
     currentWord = selectedWords[currentWordIndex];
     userAttempt = "";
-    document.getElementById('prompt').innerText = `Spell the word: ${currentWord.replace(/./g, '_ ')}`;
+    document.getElementById('prompt').innerText = `Word ${currentWordIndex + 1}: Spell the word: ${currentWord.replace(/./g, '_ ')}`;
     document.getElementById('user-input').value = '';
+    document.getElementById('no-matter-what-feedback').innerHTML = '';
     document.getElementById('feedback').innerHTML = '';
+    document.getElementById('stats').innerHTML = ''; // Clear stats
+    document.getElementById('feedback').style.display = hardMode ? 'none' : 'block';
+    document.getElementById('stats').style.display = hardMode ? 'none' : 'block';
     setTimeout(speakWord, 500);
 }
 
@@ -58,7 +84,7 @@ function speakWord() {
 
 function speakWordSlow() {
     const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.rate = 0.25;
+    utterance.rate = 0.1;
     speechSynthesis.speak(utterance);
 }
 
@@ -79,6 +105,16 @@ function checkSpelling() {
         }
         feedback.appendChild(span);
     }
+
+    // Display stats
+    const totalLetters = correctWord.length;
+    const lettersRemaining = totalLetters - userInput.length;
+    const stats = document.getElementById('stats');
+    stats.innerHTML = `
+        <p>Total letters: ${totalLetters}</p>
+        <p>Letters typed: ${userInput.length}</p>
+        <p>Letters remaining: ${lettersRemaining}</p>
+    `;
 }
 
 function submitWord() {
@@ -93,7 +129,7 @@ function submitWord() {
         feedbackText = `Incorrect! Correct spelling: ${currentWord}`;
     }
 
-    const feedback = document.getElementById('feedback');
+    const feedback = document.getElementById('no-matter-what-feedback');
     feedback.innerHTML = feedbackText;
 
     results.push({
@@ -113,19 +149,24 @@ function showSummary() {
     const result = document.getElementById('result');
     result.innerHTML = '<h2>Results:</h2>';
 
-    results.forEach(({ word, userAttempt, correct }) => {
+    results.forEach(({ word, userAttempt, correct }, index) => {
         const resultItem = document.createElement('div');
+        resultItem.style.textAlign = 'left'; // Left justify the result item
         resultItem.innerHTML = correct
-            ? `<p><strong>${word}</strong>: Correct</p>`
-            : `<p><strong>${word}</strong>: Incorrect, you spelled it as <em>${userAttempt}</em></p>`;
+            ? `<p>${index + 1}. <span style="color: green;">&#10003;</span> <strong>${word}</strong>: Correct</p>`
+            : `<p>${index + 1}. <span style="color: red;">&#10005;</span> <strong>${word}</strong>: Incorrect, you spelled it as <em>${userAttempt}</em></p>`;
         result.appendChild(resultItem);
     });
 }
 
 function startOver() {
-    document.getElementById('word-input').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('word-input').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
     document.getElementById('spell-check').style.display = 'none';
     document.getElementById('summary').style.display = 'none';
     document.getElementById('words').value = '';
+
+    // Clear selections from localStorage
+    localStorage.removeItem('selectedWords');
+    localStorage.removeItem('hardMode');
 }

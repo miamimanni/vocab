@@ -7,39 +7,43 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <div id="word-input">
-            <h1>Enter words to practice</h1>
-            <textarea id="words" rows="10" placeholder="Enter each word on a new line">Penelope
+    <h1>Spelling Practice</h1>
+
+    <div id="word-input">
+        <textarea id="words" rows="10" cols="30" placeholder="Enter words (one per line)">Penelope
 Illuminate
 Contemporary
 Association
 Notification
 Delicious
-Refreshing</textarea>
-            <button onclick="showDashboard()">Next</button>
-        </div>
+Refreshing</textarea><br>
+        <button onclick="showDashboard()">Next</button>
+    </div>
 
-        <div id="dashboard" style="display: none;">
-            <h1>Select words for study</h1>
-            <div id="word-list"></div>
-            <button onclick="startPractice()">Start Practice</button>
-        </div>
+    <div id="dashboard">
+        <h2>Select Words for Practice</h2>
+        <div id="word-list"></div>
+        <hr style="width:50%;text-align:left;margin-left:0">
+        <label>
+            <input type="checkbox" id="hard-mode"> Hard Mode (Hide feedback)
+        </label><br>
+        <button onclick="startPractice()">Start Practice</button>
+    </div>
 
-        <div id="spell-check" style="display: none;">
-            <h1 id="prompt"></h1>
-            <button onclick="speakWord()">Replay Word</button>
-            <button onclick="speakWordSlow()">Speak Slowly</button>
-            <input type="text" id="user-input" oninput="checkSpelling()">
-            <button onclick="submitWord()">Submit</button>
-            <div id="feedback"></div>
-        </div>
+    <div id="spell-check">
+        <h2 id="prompt"></h2>
+        <button onclick="speakWord()">Replay Word</button>
+        <button onclick="speakWordSlow()">Speak Slowly</button>
+        <input type="text" id="user-input" oninput="checkSpelling()">
+        <button onclick="submitWord()">Submit</button>
+        <div id="no-matter-what-feedback"></div>
+        <div id="feedback"></div>
+        <div id="stats"></div> <!-- Stats display -->
+    </div>
 
-        <div id="summary" style="display: none;">
-            <h1>Session Summary</h1>
-            <div id="result"></div>
-            <button onclick="showDashboard()">Study Again</button>
-        </div>
+    <div id="summary">
+        <div id="result"></div>
+        <button onclick="startOver()">Start Over</button>
     </div>
 
     <script src="script.js"></script>
