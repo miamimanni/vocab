@@ -37,7 +37,7 @@ Refreshing</textarea>
             <h2 id="prompt"></h2>
             <button class="btn btn-secondary" onclick="speakWord()">Replay Word</button>
             <button class="btn btn-info" onclick="speakWordSlow()">Speak Slowly</button>
-            <input type="text" id="user-input" class="form-control mt-2" oninput="checkSpelling()">
+            <input autocomplete="off" type="text" id="user-input" class="form-control mt-2" oninput="checkSpelling()">
             <button class="btn btn-primary mt-2" onclick="submitWord()">Submit</button>
             <div id="no-matter-what-feedback" class="mt-2"></div>
             <div id="feedback" class="mt-2"></div>
