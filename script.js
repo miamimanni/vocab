@@ -66,11 +66,13 @@ function loadNextWord() {
     }
     currentWord = selectedWords[currentWordIndex];
     userAttempt = "";
-    document.getElementById('prompt').innerText = `Word ${currentWordIndex + 1}: Spell the word: ${currentWord.replace(/./g, '_ ')}`;
+    document.getElementById('prompt').innerText = `Word ${currentWordIndex + 1}:`;
+    document.getElementById('prompt2-hint').innerText = `${currentWord.replace(/./g, '_ ')}`;
     document.getElementById('user-input').value = '';
     document.getElementById('no-matter-what-feedback').innerHTML = '';
     document.getElementById('feedback').innerHTML = '';
     document.getElementById('stats').innerHTML = ''; // Clear stats
+    document.getElementById('prompt2-hint').style.display = hardMode ? 'none' : 'block';
     document.getElementById('feedback').style.display = hardMode ? 'none' : 'block';
     document.getElementById('stats').style.display = hardMode ? 'none' : 'block';
     setTimeout(speakWord, 500);
