@@ -86,7 +86,7 @@ function speakWord() {
 
 function speakWordSlow() {
     const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.rate = 0.1;
+    utterance.rate = 0.01;
     speechSynthesis.speak(utterance);
 }
 
