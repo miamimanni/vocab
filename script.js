@@ -7,6 +7,7 @@ let results = [];
 let hardMode = false;
 
 function showDashboard() {
+    setDateTime()
     const wordsInput = document.getElementById('words').value.trim();
     if (wordsInput === "") return;
     words = wordsInput.split('\n').map(word => word.trim());
@@ -40,6 +41,7 @@ function showDashboard() {
 }
 
 function startPractice() {
+    setDateTime()
     selectedWords = words.filter((word, index) => document.getElementById(`word-${index}`).checked);
     hardMode = document.getElementById('hard-mode').checked;
 
@@ -125,6 +127,7 @@ function checkSpelling() {
 }
 
 function submitWord() {
+    setDateTime()
     disableButtons();
 
     const userInput = document.getElementById('user-input').value.toLowerCase();
@@ -166,6 +169,7 @@ function enableButtons() {
 }
 
 function showSummary() {
+    setDateTime()
     document.getElementById('spell-check').style.display = 'none';
     document.getElementById('summary').style.display = 'block';
 
@@ -193,3 +197,14 @@ function startOver() {
     localStorage.removeItem('selectedWords');
     localStorage.removeItem('hardMode');
 }
+
+function setDateTime() {
+    // Get current date and time
+    let now = new Date();
+    let datetime = now.toLocaleString();
+
+    // Insert date and time into HTML
+    document.getElementById("datetime").innerHTML = datetime;
+}
+
+setDateTime()
