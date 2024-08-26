@@ -7,7 +7,7 @@ let results = [];
 let hardMode = false;
 
 function showDashboard() {
-    setDateTime()
+    setHeader()
     const wordsInput = document.getElementById('words').value.trim();
     if (wordsInput === "") return;
     words = wordsInput.split('\n').map(word => word.trim());
@@ -41,7 +41,7 @@ function showDashboard() {
 }
 
 function startPractice() {
-    setDateTime()
+    setHeader()
     selectedWords = words.filter((word, index) => document.getElementById(`word-${index}`).checked);
     hardMode = document.getElementById('hard-mode').checked;
 
@@ -63,6 +63,7 @@ function showSpellCheck() {
 }
 
 function loadNextWord() {
+    setHeader()
     if (currentWordIndex >= selectedWords.length) {
         showSummary();
         return;
@@ -127,7 +128,7 @@ function checkSpelling() {
 }
 
 function submitWord() {
-    setDateTime()
+    setHeader()
     disableButtons();
 
     const userInput = document.getElementById('user-input').value.toLowerCase();
@@ -153,7 +154,7 @@ function submitWord() {
     currentWordIndex++;
     setTimeout(() => {
         loadNextWord();
-        setTimeout(enableButtons, 3000); // Enable buttons after new word is loaded with 3-second delay
+        setTimeout(enableButtons, 2000); // Enable buttons after new word is loaded with 2-second delay
     }, 1000); // 1-second delay before loading the next word
 }
 
@@ -168,13 +169,31 @@ function enableButtons() {
     document.getElementById('submit-button').disabled = true; // Initially disable submit button
 }
 
+function getGrade(score) {
+    switch (true) {
+        case score >= 90:
+        return "A";
+        case score >= 80:
+        return "B";
+        case score >= 70:
+        return "C";
+        case score >= 60:
+        return "D";
+        default:
+        return "F";
+    }
+}
+
 function showSummary() {
-    setDateTime()
+    setHeader()
+    let correctCounter = 0;
+    let incorrectCounter = 0;
+    
     document.getElementById('spell-check').style.display = 'none';
     document.getElementById('summary').style.display = 'block';
 
     const result = document.getElementById('result');
-    result.innerHTML = '<h2>Results:</h2>';
+    result.innerHTML = '';
 
     results.forEach(({ word, userAttempt, correct }, index) => {
         const resultItem = document.createElement('div');
@@ -183,10 +202,15 @@ function showSummary() {
             ? `<p>${index + 1}. <span style="color: green;">&#10003;</span> <strong>${word}</strong>: Correct</p>`
             : `<p>${index + 1}. <span style="color: red;">&#10005;</span> <strong>${word}</strong>: Incorrect, you spelled it as <em>${userAttempt}</em></p>`;
         result.appendChild(resultItem);
+        correct ? correctCounter++ : incorrectCounter++;
     });
+
+    let score = (correctCounter / results.length).toFixed(2) * 100;
+    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},<p>Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}`;
 }
 
 function startOver() {
+    setHeader()
     document.getElementById('word-input').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('spell-check').style.display = 'none';
@@ -207,4 +231,13 @@ function setDateTime() {
     document.getElementById("datetime").innerHTML = datetime;
 }
 
-setDateTime()
+function setHardModeStatus(){
+    document.getElementById("easy-or-hard-mode").innerHTML = hardMode ? "Hard Mode" : "Easy Mode";
+}
+
+function setHeader() {
+    setDateTime();
+    setHardModeStatus();
+}
+
+setHeader();
