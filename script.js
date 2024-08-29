@@ -206,7 +206,8 @@ function showSummary() {
     });
 
     let score = (correctCounter / results.length).toFixed(2) * 100;
-    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},<p>Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}`;
+    let hardModeStr = hardMode ? "Hard Mode" : "Easy Mode"
+    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
 }
 
 function startOver() {
