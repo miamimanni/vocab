@@ -207,8 +207,34 @@ function showSummary() {
 
     let score = (correctCounter / results.length).toFixed(2) * 100;
     let hardModeStr = hardMode ? "Hard Mode" : "Easy Mode"
-    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
-    document.getElementById("grade2").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
+
+    const payload = {
+        Score: score,
+        Grade: getGrade(score),
+        Correct: correctCounter,
+        Incorrect: incorrectCounter,
+        Total: results.length,
+        Mode: hardModeStr,
+        Results: results
+    };
+
+    json_payload = JSON.stringify(payload);
+    const encodedData = btoa(json_payload);
+
+    let resultURL = 'https://script.google.com/macros/s/AKfycbz4rM8JFm_vhD-VApPFMcGf-oq_QH84-liuqWodkl2rzoKhTOHJaOl-j2wHT9oUmhvjMw/exec';
+
+    const xhr1 = new XMLHttpRequest();
+    xhr1.open('GET', resultURL, false);
+    xhr1.send();
+
+    const xhr2 = new XMLHttpRequest();
+    xhr2.open("POST", resultURL, false);
+    xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr2.send(`data=${encodedData}`);
+
+    // document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
+    // document.getElementById("grade2").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
+    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},<p>Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}`;
 }
 
 function startOver() {
