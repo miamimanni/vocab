@@ -22,8 +22,14 @@ function populateVoiceList() {
     });
 
     // Set the default selected voice to the first one available
-    voiceSelect.selectedIndex = 0;
-    selectedVoice = voices[0];
+    let defaultVoiceIndex = englishVoices.findIndex(voice => voice.name.toLowerCase().includes('samantha'));
+
+    // If "Samantha" is not found, default to the first voice
+    if (defaultVoiceIndex === -1) {
+        defaultVoiceIndex = 0;
+    }
+    voiceSelect.selectedIndex = defaultVoiceIndex;
+    selectedVoice = voices[defaultVoiceIndex];
 }
 
 function showDashboard() {
