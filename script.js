@@ -194,7 +194,11 @@ function disableButtons() {
 function enableButtons() {
     const buttons = document.querySelectorAll('#spell-check button');
     buttons.forEach(button => button.disabled = false);
-    document.getElementById('submit-button').disabled = true; // Initially disable submit button
+    if (document.getElementById('user-input').value.length === 0) {
+        document.getElementById('submit-button').disabled = true; // Initially disable submit button
+    } else {
+        document.getElementById('submit-button').disabled = false;
+    }
 }
 
 function getGrade(score) {
@@ -323,7 +327,9 @@ function setHeader() {
 
 // Update selectedVoice when the dropdown value changes
 document.getElementById('voice-selection').addEventListener('change', function() {
+    disableButtons();
     selectedVoice = voices[this.value];
+    enableButtons();
 });
 
 // Load the voices when the page is ready
