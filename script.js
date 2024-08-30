@@ -5,6 +5,26 @@ let currentWord = "";
 let userAttempt = "";
 let results = [];
 let hardMode = false;
+let voices = [];
+let selectedVoice = null;
+
+function populateVoiceList() {
+    voices = speechSynthesis.getVoices();
+    voices = voices.filter(voice => voice.lang.toLowerCase().includes('en'));
+    const voiceSelect = document.getElementById('voice-selection');
+    voiceSelect.innerHTML = '';
+
+    voices.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.textContent = `${voice.name} (${voice.lang})`;
+        option.value = index;
+        voiceSelect.appendChild(option);
+    });
+
+    // Set the default selected voice to the first one available
+    voiceSelect.selectedIndex = 0;
+    selectedVoice = voices[0];
+}
 
 function showDashboard() {
     setHeader()
@@ -84,13 +104,15 @@ function loadNextWord() {
 
 function speakWord() {
     const utterance = new SpeechSynthesisUtterance(currentWord);
+    utterance.voice = selectedVoice;
     utterance.rate = 0.5;
     speechSynthesis.speak(utterance);
 }
 
 function speakWordSlow() {
     const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.rate = 0.01;
+    utterance.voice = selectedVoice;
+    utterance.rate = 0.1;
     speechSynthesis.speak(utterance);
 }
 
@@ -292,5 +314,15 @@ function setHeader() {
     setDateTime();
     setHardModeStatus();
 }
+
+// Update selectedVoice when the dropdown value changes
+document.getElementById('voice-selection').addEventListener('change', function() {
+    selectedVoice = voices[this.value];
+});
+
+// Load the voices when the page is ready
+speechSynthesis.onvoiceschanged = populateVoiceList;
+
+populateVoiceList(); // Call it immediately in case voices are already loaded
 
 setHeader();
