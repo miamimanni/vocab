@@ -183,6 +183,25 @@ function getGrade(score) {
         return "F";
     }
 }
+function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+    let progressBar = document.getElementById('progress-bar');
+    let progress = 0;
+
+    let interval = setInterval(() => {
+        progress += 1;
+        progressBar.style.width = progress + '%';
+        progressBar.setAttribute('aria-valuenow', progress);
+
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 1); // Adjust the interval for desired speed
+}
+
+function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+}
 
 function showSummary() {
     setHeader()
@@ -190,7 +209,6 @@ function showSummary() {
     let incorrectCounter = 0;
     
     document.getElementById('spell-check').style.display = 'none';
-    document.getElementById('summary').style.display = 'block';
 
     const result = document.getElementById('result');
     result.innerHTML = '';
@@ -223,14 +241,21 @@ function showSummary() {
 
     let resultURL = 'https://script.google.com/macros/s/AKfycbz4rM8JFm_vhD-VApPFMcGf-oq_QH84-liuqWodkl2rzoKhTOHJaOl-j2wHT9oUmhvjMw/exec';
 
-    const xhr1 = new XMLHttpRequest();
-    xhr1.open('GET', resultURL, false);
-    xhr1.send();
+    showLoading()
 
-    const xhr2 = new XMLHttpRequest();
-    xhr2.open("POST", resultURL, false);
-    xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr2.send(`data=${encodedData}`);
+    setTimeout(() => { 
+        const xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', resultURL, false);
+        xhr1.send();
+    
+        const xhr2 = new XMLHttpRequest();
+        xhr2.open("POST", resultURL, false);
+        xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr2.send(`data=${encodedData}`);
+        hideLoading(); 
+    }, 1000);
+
+    document.getElementById('summary').style.display = 'block';
 
     // document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
     // document.getElementById("grade2").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;

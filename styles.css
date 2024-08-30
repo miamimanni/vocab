@@ -7,7 +7,7 @@ body {
 h1, h2 {
     text-align: center;
 }
-#dashboard, #spell-check, #summary {
+#dashboard, #spell-check, #summary, #loading {
     display: none;
 }
 
@@ -38,4 +38,31 @@ h1, h2 {
 
 #stats {
     margin-top: 10px; /* Add space above stats */
+}
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it appears above other content */
+    text-align: center;
+    padding-top: 20%;
+}
+
+.loading-container {
+    display: inline-block;
+    text-align: center;
+}
+
+.progress {
+    width: 50%;
+    margin: 20px auto;
+}
+
+.progress-bar {
+    background-color: #007bff;
+    height: 25px;
 }
