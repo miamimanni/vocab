@@ -237,6 +237,7 @@ function hideLoading() {
 
 function showSummary() {
     setHeader()
+    let dateTimeNow = document.getElementById("datetime").innerHTML;
     let correctCounter = 0;
     let incorrectCounter = 0;
     
@@ -289,9 +290,8 @@ function showSummary() {
 
     document.getElementById('summary').style.display = 'block';
 
-    // document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
-    // document.getElementById("grade2").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
-    document.getElementById("grade").innerHTML = `Score: ${score}%, Grade: ${getGrade(score)},<p>Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}`;
+    document.getElementById("grade").innerHTML = `Date: ${dateTimeNow}, Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
+    document.getElementById("grade2").innerHTML = `Date: ${dateTimeNow}, Score: ${score}%, Grade: ${getGrade(score)},Correct: ${correctCounter}, Incorrect: ${incorrectCounter}, Total: ${results.length}, Mode: ${hardModeStr}`;
 }
 
 function startOver() {
