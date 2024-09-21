@@ -7,6 +7,7 @@ let results = [];
 let hardMode = false;
 let voices = [];
 let selectedVoice = null;
+const googleApiURL = 'https://script.google.com/macros/s/AKfycbzTfkPWgsRsbY7quwfKNbOCNwjOcZIRXgcqdBxsVvAlHyiG7_s1bQ_kpxMEBeLo3h9CCA/exec';
 
 function populateVoiceList() {
     voices = speechSynthesis.getVoices();
@@ -272,17 +273,15 @@ function showSummary() {
     json_payload = JSON.stringify(payload);
     const encodedData = btoa(json_payload);
 
-    let resultURL = 'https://script.google.com/macros/s/AKfycbz4rM8JFm_vhD-VApPFMcGf-oq_QH84-liuqWodkl2rzoKhTOHJaOl-j2wHT9oUmhvjMw/exec';
-
     showLoading()
 
     setTimeout(() => { 
         const xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', resultURL, false);
+        xhr1.open('GET', googleApiURL, false);
         xhr1.send();
     
         const xhr2 = new XMLHttpRequest();
-        xhr2.open("POST", resultURL, false);
+        xhr2.open("POST", googleApiURL, false);
         xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr2.send(`data=${encodedData}`);
         hideLoading(); 
@@ -338,3 +337,18 @@ speechSynthesis.onvoiceschanged = populateVoiceList;
 populateVoiceList(); // Call it immediately in case voices are already loaded
 
 setHeader();
+
+function initialPopulateWords(){
+    const xhr3 = new XMLHttpRequest();
+    xhr3.open('GET', googleApiURL, false);
+    xhr3.send();
+    let responsePayload = xhr3.response;
+    let parsedwords = JSON.parse(responsePayload)["words"].join("\n");
+    document.getElementById('words').innerHTML = parsedwords;
+}
+
+initialPopulateWords();
+
+showLoading()
+
+setTimeout(hideLoading, 1000);
