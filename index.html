@@ -3,73 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spelling Practice</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="refresh" content="1; url=https://miamimanni.github.io/VocabV3/">
+    <title>Redirecting...</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center my-4">Spelling Practice</h1>
-        <p id="datetime" class="text-center"></p>
-        <p id="easy-or-hard-mode" class="text-center"></p>
-
-        <div id="word-input" class="mb-4">
-            <textarea id="words" class="form-control" rows="9" placeholder="Enter words (one per line)">Loading Words...</textarea>
-            <button class="btn btn-primary mt-2" onclick="showDashboard()">Next</button>
-        </div>
-
-        <div id="dashboard" class="mb-4">
-            <h2>Select Words for Practice</h2>
-            <div id="word-list" class="mb-3"></div>
-            <hr>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="hard-mode">
-                <label class="form-check-label" for="hard-mode">Hard Mode (Hide feedback)</label>
-            </div>
-            <button class="btn btn-success mt-2" onclick="startPractice()">Start Practice</button>
-        </div>
-
-        <div id="spell-check" class="mb-4">
-            <h2 id="prompt"></h2>
-            <h3 id="prompt2">Spell the word: <div id="prompt2-hint"></div></h3>
-            <button class="btn btn-secondary" onclick="speakWord()">Replay Word</button>
-            <button class="btn btn-info" onclick="speakWordSlow()">Speak Slowly</button>
-            <input spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" type="text" id="user-input" class="form-control mt-2" oninput="checkSpelling()">
-            <button id="submit-button" class="btn btn-primary mt-2" onclick="submitWord()">Submit</button>
-            <div id="no-matter-what-feedback" class="mt-2"></div>
-            <div id="feedback" class="mt-2"></div>
-            <div id="stats" class="mt-2"></div> <!-- Stats display -->
-            <label for="voice-selection">Select Voice:</label>
-            <select id="voice-selection" class="form-control mb-2"></select>
-        </div>
-
-        <div id="loading">
-            <div class="loading-container">
-                <h2>Loading...</h2>
-                <div class="progress">
-                    <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="summary" class="mb-4">
-            <h2>Results:</h2>
-            <div id="grade" class="text-center"></div>
-            <div id="result"></div>
-            <div id="grade2" class="text-center"></div>
-            <button class="btn btn-warning mt-2" onclick="startOver()">Start Over</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>You are being redirected...</h1>
+    <p>This is the old spelling app, taking you to the new one</p>
+    <p>If you are not redirected within 5 seconds, <a href="https://miamimanni.github.io/VocabV3/">click here</a>.</p>
 </body>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KFS0WN24DT"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'G-KFS0WN24DT');
-</script>
 </html>
